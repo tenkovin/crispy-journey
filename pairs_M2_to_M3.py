@@ -47,33 +47,6 @@ def get_blocks(array, block):
         bl.append(array[i])
     return bl
 
-#exchanging block 'block' in array on data_array (not tested)
-#def exchange_blocks(array, block, data_array):
-    #exchanged_array = array
-    #for i in range(len(array)):
-    #    if ((len(array[i]) == 3) and (array[i][1] == block)):
-    #        a = i + 1; break
-    #for i in range(a, len(array)):
-    #    if (not array[i]):
-    #        b = i; break
-    #exchanged_array[a:b] = data_array
-    #return exchanged_array
-
-#insert data as block2 AFTER block1
-#def insert(array,block1,block2,data):
-#    for i in range(len(array)):
-#        if ((len(array[i]) == 3) and (array[i][1] == block1)):
-#            print(a)
-#    for i in range(a, len(array)):
-#        if (not array[i]):
-#            b = i
-#    array.insert(b, []); b+=1
-#    array.insert(b, ['  [ %s ]' % (block2)]); b+=1
-#    for i in range(len(data)):
-#        array.insert(b, (data[i])); b+=1
-#    array.insert(b, [])
-#    return array, a, c
-
 #gets end of 'bonds' block index
 def get_block_indexes(array, block):
     array = atoms_array
@@ -106,14 +79,7 @@ def get_d(array, ind1, ind2):
 #calculates sigma from d
 def get_const(ind1, ind2):
     sigma = get_d(pdb_array, ind1, ind2)/((2)**(1/6))
-    #C6 = 4*9.414*sigma**6; C12 = 4*9.414*sigma**12
-    #return C6, C12
     return sigma
-
-#makes own functions for each constant, rounding them to .00000
-#def get_c6(ind1, ind2): C6, C12 = get_const(ind1, ind2); return round(C6,5)
-#def get_c12(ind1, ind2): C6, C12 = get_const(ind1, ind2); return round(C12,5)
-
 
 #checks for equality the number of residue, name of residue, and type of atom (BB, SC1, SC2, etc) in two files
 #and comes out with 2xi array of mapping
