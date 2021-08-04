@@ -74,7 +74,7 @@ def get_d(array, ind1, ind2):
         if (int(array[i][1]) == ind2):
             x2 = float(array[i][6]); y2 = float(array[i][7]); z2 = float(array[i][8]); break
     r12 = math.sqrt((x1-x2)**2+(y1-y2)**2+(z1-z2)**2)
-    return r12/10 #nanom to angstroms
+    return r12/10 #ang to nanometers
 
 #calculates sigma from d
 def get_const(ind1, ind2):
