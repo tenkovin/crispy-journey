@@ -91,12 +91,11 @@ def make_contacts():
     return(contacts)
 
 def get_output(file):
-    f = open('New_pairs.txt', 'w')
-    f.write('[ pairs ]')
-    for i in range(len(file)):
-        f.write('\n')
-        f.write('{0:4d}    {1:4d}    {2:4d}    {3:15.15F}    {4:5f}'.format(*file[i]))
-    f.close()
+    with open('New_pairs.txt', 'w') as f:
+        f.write('[ pairs ]')
+        for i in range(len(file)):
+            f.write('\n')
+            f.write('{0:4d}    {1:4d}    {2:4d}    {3:15.15F}    {4:5f}'.format(*file[i]))
     print('New pairs saved in: ..../Working directory/New_pairs.txt')
 
 def get_topology():
@@ -110,10 +109,12 @@ def get_topology():
         for i in range(len(values)):
             contents.insert(bb, values[i])
             bb += 1
+
         contents.insert(bb, '\n\n')
     with open(new_topology_filename, "w") as f:
         contents = "".join(contents)
         f.write(contents)
+
     print('Topology saved in: ..../Working directory/%s' % new_topology_filename)
 
 #---------------------Main block-------------------------------------------------------------------------
