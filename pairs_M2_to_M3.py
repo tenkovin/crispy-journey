@@ -140,13 +140,12 @@ def get_indexation(array, map):
 
 #writes reindexated pairs into new_pairs.txt file
 def get_output(file):
-    f = open('New_pairs.txt', 'w')
-    f.write('[ pairs ]')
-    for i in range(len(file)):
-        f.write('\n')
+    with open('New_pairs.txt', 'w') as f:
+        f.write('[ pairs ]')
+        for i in range(len(file)):
+            f.write('\n')
         #for j in range(len(file[i])):
-        f.write('{0:4d}    {1:4d}    {2:4s}    {3:15.15F}    {4:5s}'.format(*file[i]))
-    f.close()
+            f.write('{0:4d}    {1:4d}    {2:4s}    {3:15.15F}    {4:5s}'.format(*file[i]))
     print('New pairs saved in: ..../Working directory/New_pairs.txt')
 
 #writes final topology file with pairs added after 'bonds'
@@ -154,20 +153,18 @@ def get_topology():
 
     bb = get_block_indexes(atoms_array, 'bonds')
 
-    f = open(sys.argv[2], "r")
-    contents = f.readlines()
-    f.close()
+    with open(sys.argv[2], "r") as f:
+        contents = f.readlines()
 
-    f = open('New_pairs.txt', "r")
-    values = f.readlines()
-    for i in range(len(values)):
-        contents.insert(bb, values[i])
-        bb += 1
-    contents.insert(bb, '\n\n')
-    f = open("New_topology.itp", "w")
-    contents = "".join(contents)
-    f.write(contents)
-    f.close()
+    with open('New_pairs.txt', "r") as f:
+        values = f.readlines()
+        for i in range(len(values)):
+            contents.insert(bb, values[i])
+            bb += 1
+        contents.insert(bb, '\n\n')
+    with open("New_topology.itp", "w") as f:
+        contents = "".join(contents)
+        f.write(contents)
     print('Topology saved in: ..../Working directory/New_topology.itp')
 #---------------------Main block-------------------------------------------------------------------------
 
