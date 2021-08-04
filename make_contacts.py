@@ -124,11 +124,7 @@ new_topology_filename = ("Topology_cutoff_%s.itp" % cutoff)
 atoms_array = get_file_string_array(atoms_file_name)
 pdb_array = get_file_string_array(pdb_file_name)
 
-
-#takes 2-d array of atoms in pairs_FILE and in atoms_FILE, and 2-d array of pairs in pairs_FILE
 atoms = get_blocks(atoms_array, 'atoms')
 
-
-#creates new file new_pairs.txt, writes new pairs
 get_output(make_contacts())
 get_topology()
