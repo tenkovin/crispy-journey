@@ -53,7 +53,7 @@ def count_contacts(cutoff):
     n = 0
     for i in range(len(contacts)):
         ind1 = int(contacts[i][0]); ind2 = int(contacts[i][1])
-        if distance(ind1, ind2) < cutoff:
+        if distance(ind1, ind2) < cutoff: 
             n += 1
     return n
 
