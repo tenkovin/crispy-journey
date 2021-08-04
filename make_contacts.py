@@ -68,10 +68,10 @@ def get_d(array, ind1, ind2):
         if (int(array[i][1]) == ind2):
             x2 = float(array[i][6]); y2 = float(array[i][7]); z2 = float(array[i][8]); break
     r12 = math.sqrt((x1-x2)**2+(y1-y2)**2+(z1-z2)**2)
-    return r12/10 #nanom to angstroms
+    return r12 #angstroms
 
 def get_const(ind1, ind2):
-    sigma = get_d(pdb_array, ind1, ind2)/((2)**(1/6))
+    sigma = get_d(pdb_array, ind1, ind2)/(((2)**(1/6))*10) #ang to nanom
     return sigma
 
 def make_contacts():
@@ -81,7 +81,7 @@ def make_contacts():
         ind1 = i+1
         ind2 = i+5
         for j in range(ind2, len(atoms)+1):
-            distance = get_d(pdb_array, ind1, j)*10 #(nanom to ang)
+            distance = get_d(pdb_array, ind1, j)
             if distance < cutoff: #angstroms
                 N += 1
                 contact = ind1, j, 1, get_const(ind1, ind2), epsilon
