@@ -1,0 +1,12 @@
+#!/usr/bin/expect
+set gro_file [lindex $argv 0]
+set xtc_file [lindex $argv 1]
+spawn  "vmd"
+expect "Info) /usr/local/lib/VMD/plugins/LINUXAMD64/molfile"
+send -- "mol new $file\r"
+expect "Info) Finished with coordinate file $file."
+send -- "source cg_bonds-v5.tcl\r"
+expect "cg_dmb -molid 1"
+send -- "cg_bonds -top visual.top\r"
+interact
+
