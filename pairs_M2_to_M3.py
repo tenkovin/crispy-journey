@@ -98,8 +98,6 @@ def get_indexation(array, map):
         new_array = array
         new_array[i][0] = map[int(array[i][0])-1][1]
         new_array[i][1] = map[int(array[i][1])-1][1]
-        #new_array[i][3] = get_c6((new_array[i][0]),(new_array[i][1]))
-        #new_array[i][4] = get_c12(new_array[i][0],new_array[i][1])
         new_array[i][3] = get_const((new_array[i][0]),(new_array[i][1]))
         new_array[i][4] = epsilon
     return(new_array)
@@ -110,7 +108,6 @@ def get_output(file):
         f.write('[ pairs ]')
         for i in range(len(file)):
             f.write('\n')
-        #for j in range(len(file[i])):
             f.write('{0:4d}    {1:4d}    {2:4s}    {3:15.15F}    {4:5s}'.format(*file[i]))
     print('New pairs saved in: ..../Working directory/New_pairs.txt')
 
@@ -139,7 +136,6 @@ pairs_file_name, atoms_file_name, pdb_file_name, epsilon = get_inputs()
 pairs_array = get_file_string_array(pairs_file_name)
 atoms_array = get_file_string_array(atoms_file_name)
 pdb_array = get_file_string_array(pdb_file_name)
-
 
 #takes 2-d array of atoms in pairs_FILE and in atoms_FILE, and 2-d array of pairs in pairs_FILE
 at1 = get_blocks(pairs_array, 'atoms')
