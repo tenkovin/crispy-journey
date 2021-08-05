@@ -5,7 +5,7 @@ import math
 
 u = MDAnalysis.Universe('longrun.tpr', 'longrun.xtc')
 tpr_resid_from_one=False
-
+print(u)
 #------FUNCTIONS----------
 
 # read file data into a 2-d array
@@ -49,25 +49,34 @@ def distance(ind1, ind2): #gets index list starting from 1, gives d for index li
     return r12
 
 #Count contacts in one frame
-def count_contacts(cutoff):
+def count_contacts():
     n = 0
     for i in range(len(contacts)):
         ind1 = int(contacts[i][0]); ind2 = int(contacts[i][1])
-        if distance(ind1, ind2) < cutoff: 
+        if distance(ind1, ind2)/10 < 2*(float(contacts[i][3])):
             n += 1
     return n
 
+#calculates sigma from d
+def get_const(ind1, ind2):
+    sigma = distance(ind1, ind2)/((2)**(1/6))
+    #C6 = 4*9.414*sigma**6; C12 = 4*9.414*sigma**12
+    #return C6, C12
+    return sigma
+
 #------------------MAIN----------------------------
+
 pairs_array = get_file_string_array('Protein_A.itp')
 contacts = get_blocks(pairs_array, 'pairs')
+
+
 time = []
 contacts_trj = []
 
 for tes in u.trajectory:
-    contacts_trj.append(count_contacts(11))
+    contacts_trj.append(count_contacts())
     time.append(u.trajectory.time/1000)
 
-print(contacts_trj)
 
 fig, ax = plt.subplots()
 
@@ -78,4 +87,4 @@ ax.spines['left'].set_linewidth(2)
 ax.spines['bottom'].set_linewidth(2)
 ax.tick_params(width=3, labelsize=13)
 fig.savefig("plot.png", format='png', dpi=600)
-plt.show()
+print('plot.png saved to working directory')
