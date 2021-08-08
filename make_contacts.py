@@ -53,7 +53,7 @@ def get_block_indexes(array, block):
             a = i + 1
     for i in range(a, len(array)):
         if (not array[i]):
-            b = i+1; break5
+            b = i+1; break
     return(b)
 
 def get_d(array, ind1, ind2):
@@ -74,19 +74,33 @@ def get_const(ind1, ind2):
     sigma = get_d(pdb_array, ind1, ind2)/(((2)**(1/6))*10) #ang to nanom
     return sigma
 
+def make_index_bb():
+    index = []
+    for i in range(len(atoms)):
+        if atoms[i][4] == 'BB':
+            index.append(atoms[i])
+    return index
+
 def make_contacts():
     contacts = []
     N = 0
+<<<<<<< HEAD
     for i in range(len(atoms)):
         ind1 = i+1
         ind2 = i+5
         for j in range(ind2, len(atoms)+1):
             distance = get_d(pdb_array, ind1, j)
+=======
+    for i in range(len(index)-4):
+        for j in range(i+4, len(index)):
+            ind1, ind2 = int(index[i][0]), int(index[j][0])
+            print('atom %s atom %s' % (ind1, ind2))
+            distance = get_d(pdb_array, ind1, ind2)*10 #(nanom to ang)
+>>>>>>> a52472548801436780d71db8f8a17399aceab833
             if distance < cutoff: #angstroms
                 N += 1
-                contact = ind1, j, 1, get_const(ind1, ind2), epsilon
+                contact = ind1, ind2, 1, get_const(ind1, ind2), epsilon
                 contacts.append(contact)
-        if ind2 == 534: break
     print('(%s) contacts found, cutoff = (%s)' % (N, cutoff))
     return(contacts)
 
@@ -126,6 +140,10 @@ atoms_array = get_file_string_array(atoms_file_name)
 pdb_array = get_file_string_array(pdb_file_name)
 
 atoms = get_blocks(atoms_array, 'atoms')
+index = make_index_bb()
+
+
+print(index)
 
 get_output(make_contacts())
 get_topology()
