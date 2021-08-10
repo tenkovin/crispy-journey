@@ -86,7 +86,9 @@ helix1 = list(range(370, 415, 1))
 helix2 = list(range(415, 475, 1))
 helix3 = list(range(475, 534, 1))
 
-helix12, helix23, helix13 = []
+helix12 = []
+helix23 = []
+helix13 = []
 for index in contacts:
     if (index[0] in helix1 and index[1] in helix2) or (index[0] in helix2 and index[1] in helix1):
         helix12.append([index[0], index[1]])
@@ -94,7 +96,6 @@ for index in contacts:
         helix13.append([index[0], index[1]])
     elif (index[0] in helix2 and index[1] in helix3) or (index[0] in helix3 and index[1] in helix2):
         helix23.append([index[0], index[1]])
-
 
 
 time = []
@@ -107,7 +108,7 @@ for tes in u.trajectory:
 
 fig, ax = plt.subplots()
 
-ax.plot(time, contacts_trj, '--', color='black', linewidth=2)
+ax.plot(time, contacts_trj, '.', color='black', linewidth=2)
 ax.spines['right'].set_visible(False)
 ax.spines['top'].set_visible(False)
 ax.spines['left'].set_linewidth(2)
