@@ -1,9 +1,8 @@
 import sys, math
 import numpy as np
-
 import MDAnalysis
-from MDAnalysis.tests.datafiles import PDB_small, PDB_closed
 from MDAnalysis.analysis import distances
+
 # read file data into a 2-d array
 def get_file_string_array(file_name):
     try:
@@ -28,9 +27,9 @@ def get_inputs():
         # atoms_file_name = sys.argv[2]
         # pdb_file_name = sys.argv[3]
         # epsilon = sys.argv[4]
-        pairs_file_name = 'Protein_A.itp'
-        atoms_file_name = 'atoms_v2.itp'
-        pdb_file_name = 'protein.pdb'
+        pairs_file_name = 'Protein_A_2.itp'
+        atoms_file_name = 'molecule_0.itp'
+        pdb_file_name = 'protein3.pdb'
         epsilon = '9.414'
         return pairs_file_name, atoms_file_name, pdb_file_name, epsilon
 
@@ -60,11 +59,10 @@ def get_d(ind1, ind2): #gets index list starting from 1, gives d for index list 
     atom1 = u.select_atoms('index '+str(ind1))
     atom2 = u.select_atoms('index '+str(ind2))
     r12 = distances.dist(atom1,atom2, offset = 0)[2]
-    return r12
+    return r12[0]
 
-
-
-
+    print(get_d(3,11)/(((2)**(1/6))*10))
+    print(get_const(3,11))
 #calculates sigma from d
 def get_const(ind1, ind2):
     sigma = get_d(ind1, ind2)/(((2)**(1/6))*10) #nanom
@@ -136,12 +134,13 @@ pr1 = get_blocks(pairs_array, 'pairs')
 
 #mapping
 _map_ = get_mapping(at1, at2)
+array = np.array(_map_)
 print(_map_)
 
 #indexation
 new_pairs_array = get_indexation(pr1, _map_)
 
-print(new_pairs_array[3])
+print(new_pairs_array[1])
 #creates new file new_pairs.txt, writes new pairs
 get_output(new_pairs_array)
 
