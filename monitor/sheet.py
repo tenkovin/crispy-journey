@@ -40,7 +40,7 @@ client = gspread.authorize(creds)
 # In[43]:
 
 
-sheet = client.open_by_key('1VFhAoyh-bbwuFEQMDkq15Pm4Qlsfvc7uvBc-aHdt0KA')
+sheet = client.open_by_key('your_key')
 worksheet = sheet.get_worksheet(0)
 python_sheet = worksheet.get_all_records()
 pp = pprint.PrettyPrinter()
@@ -63,6 +63,9 @@ testtt
 
 
 machines = {
+#'server id in ps aux output':'server ip or server@host name' 
+#'server id in ps aux output':'server ip or server@host name'
+#....
 'dogge38':'dogge38@dogge38',
 'dogge38+':'dogge38-i@dogge38i',
 'dogge37':'dogge37@dogge',
@@ -71,7 +74,7 @@ machines = {
 'lab1':'lab1@lab221',
 }
 
-get_ipython().system("parallel-ssh -i -h ~/hosts -- ps aux | grep 'gmx mdrun' > load.log")
+get_ipython().system("parallel-ssh -i -h ~/hosts -- ps aux | grep 'gmx mdrun' > load.log") #~/hosts - host file
 get_ipython().system("ps aux | grep 'gmx mdrun' | grep -v 'grep' >> load.log")
 
 with open(f'load.log', 'r') as file:
@@ -88,7 +91,7 @@ for line in lines:
     
     pid = (line1.split()[1])
     machine = machines[line1.split()[0]]
-    if line1.split()[0] == 'shiba1':
+    if line1.split()[0] == 'shiba1': #shiba1 - host machine id
          dir = str(sp.check_output(f"pwdx {pid} | awk '{{print $2}}'", shell=True))[2:-3]
     else:
         dir = str(sp.check_output(f"ssh {machine} 'pwdx {pid}' | awk '{{print $2}}'", shell=True))[2:-3]
@@ -138,15 +141,15 @@ df_res
 # In[53]:
 
 
-load = np.array(df_res[['process']]).tolist()
-load1 = [[dt_string]]
-load2 = np.array(df_res[['directory']]).tolist()
+load = np.array(df_res[['process']]).tolist() #list of processes to be loaded in spreadsheet
+load1 = [[dt_string]] #current time and date
+load2 = np.array(df_res[['directory']]).tolist() #list of directories to be loaded in spreadsheet
 
 if not df[['process']].equals(df_res[['process']]):
     print("updating...", dt_string)	
 
     worksheet.batch_update([{
-        'range': 'H2:H7',
+        'range': 'H2:H7', #see gspread manual
         'values': load,
     },
     {
